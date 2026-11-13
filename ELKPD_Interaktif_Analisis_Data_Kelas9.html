@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-LKPD Interaktif: Analisis Data Lanjutan - Informatika Kelas IX</title>
+<style>
+  :root {
+    --primary: #107c41; /* Excel Green */
+    --primary-dark: #0b5a2f;
+    --primary-light: #e6f4ea;
+    --secondary: #1a73e8;
+    --secondary-light: #e8f0fe;
+    --accent: #f59e0b;
+    --bg: #f4f7f6;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #d1d5db;
+    --danger: #dc2626;
+    --success: #16a34a;
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 24px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  header h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.75rem;
+  }
+
+  header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.95rem;
+  }
+
+  .score-box {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-align: center;
+    min-width: 150px;
+  }
+
+  .score-box .label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .score-box .value {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+
+  nav.tabs {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  .tabs-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 0 16px;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  main {
+    max-width: 1080px;
+    margin: 24px auto;
+    padding: 0 16px 60px 16px;
+  }
+
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e5e7eb;
+  }
+
+  .card h2 {
+    margin-top: 0;
+    color: var(--primary-dark);
+    font-size: 1.35rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card h3 {
+    color: #111827;
+    font-size: 1.1rem;
+    margin-top: 20px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+  }
+
+  input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: border 0.2s;
+  }
+
+  input[type="text"]:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  .concept-box {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px;
+    background: #fafafa;
+  }
+
+  .concept-box h4 {
+    margin: 0 0 8px 0;
+    color: var(--primary);
+    font-size: 1.05rem;
+  }
+
+  .formula-pill {
+    display: inline-block;
+    background: #1f2937;
+    color: #a7f3d0;
+    font-family: Consolas, Monaco, monospace;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin: 6px 0;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Spreadsheet Table Styling */
+  .sheet-wrapper {
+    overflow-x: auto;
+    border: 1px solid #9ca3af;
+    border-radius: 6px;
+    margin: 14px 0;
+    background: white;
+  }
+
+  table.excel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  table.excel-table th {
+    background: #e5e7eb;
+    color: #374151;
+    font-weight: 700;
+    text-align: center;
+    padding: 8px 10px;
+    border: 1px solid #9ca3af;
+  }
+
+  table.excel-table th.col-header {
+    background: #d1fae5;
+    color: var(--primary-dark);
+  }
+
+  table.excel-table td {
+    padding: 8px 10px;
+    border: 1px solid #d1d5db;
+  }
+
+  table.excel-table td.row-num {
+    background: #f3f4f6;
+    text-align: center;
+    font-weight: 700;
+    color: #4b5563;
+    width: 36px;
+  }
+
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .center { text-align: center; }
+
+  .highlight-cell {
+    background-color: #fef3c7 !important;
+    font-weight: 700;
+    transition: background 0.3s;
+  }
+
+  .highlight-row {
+    background-color: #dbeafe !important;
+  }
+
+  .highlight-col {
+    background-color: #dcfce7 !important;
+  }
+
+  /* Interactive Simulator Controls */
+  .sim-panel {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .sim-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .sim-controls > div {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.92rem;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .btn:hover { background: var(--primary-dark); }
+  .btn:active { transform: scale(0.98); }
+
+  .btn-secondary {
+    background: var(--secondary);
+  }
+  .btn-secondary:hover { background: #1557b0; }
+
+  .btn-outline {
+    background: white;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+  .btn-outline:hover { background: var(--primary-light); }
+
+  .formula-bar {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #9ca3af;
+    border-radius: 6px;
+    margin: 10px 0;
+    overflow: hidden;
+  }
+
+  .formula-bar .fx {
+    background: #f3f4f6;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--primary);
+    border-right: 1px solid #9ca3af;
+  }
+
+  .formula-bar input {
+    border: none;
+    border-radius: 0;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 0.95rem;
+  }
+
+  .formula-bar input:focus {
+    box-shadow: none;
+  }
+
+  .feedback {
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+  }
+
+  .feedback.ok {
+    display: block;
+    background: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+  }
+
+  .feedback.err {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+  }
+
+  /* Pivot Table Builder */
+  .pivot-zones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  .zone-box {
+    background: white;
+    border: 2px dashed #9ca3af;
+    border-radius: 8px;
+    padding: 12px;
+  }
+
+  .zone-box h4 {
+    margin: 0 0 8px 0;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .chip.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  .diagram-container {
+    text-align: center;
+    background: white;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    margin: 14px 0;
+  }
+
+  .diagram-container svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .caption {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  .status-badge {
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .status-laris { background: #dcfce7; color: #166534; }
+  .status-normal { background: #f3f4f6; color: #374151; }
+
+  @media print {
+    nav.tabs, .sim-panel, .btn { display: none !important; }
+    .tab-panel { display: block !important; }
+    body { background: white; }
+    .card { box-shadow: none; border: 1px solid #ccc; page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <span class="badge">INFORMATIKA KELAS IX • FASE D</span>
+      <h1>E-LKPD Interaktif: Analisis Data Lanjutan</h1>
+      <p>Simulasi Praktik Fungsi Logika (IF), Pencarian Data (VLOOKUP &amp; HLOOKUP), dan Pivot Table</p>
+    </div>
+    <div class="score-box">
+      <div class="label">Skor Praktik</div>
+      <div class="value" id="totalScore">0 / 100</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="openTab('tab1', this)">1. Identitas &amp; Materi Visual</button>
+    <button class="tab-btn" onclick="openTab('tab2', this)">2. Simulasi IF &amp; Statistik</button>
+    <button class="tab-btn" onclick="openTab('tab3', this)">3. Simulasi VLOOKUP &amp; HLOOKUP</button>
+    <button class="tab-btn" onclick="openTab('tab4', this)">4. Simulasi Pivot Table &amp; Grafik</button>
+    <button class="tab-btn" onclick="openTab('tab5', this)">5. Kesimpulan &amp; Rekap Nilai</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- TAB 1: IDENTITAS & MATERI VISUAL -->
+  <section id="tab1" class="tab-panel active">
+    <div class="card">
+      <h2>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        Identitas Kelompok Peserta Didik
+      </h2>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Nama Anggota Kelompok (1 - 3 Siswa):</label>
+          <input type="text" id="studentNames" placeholder="Contoh: Andi, Budi, Citra">
+        </div>
+        <div class="form-group">
+          <label>Kelas / Kelompok:</label>
+          <input type="text" id="studentClass" placeholder="Contoh: IX-A / Kelompok 2">
+        </div>
+      </div>
+      <p><strong>Tujuan Pembelajaran:</strong> Melalui E-LKPD interaktif ini, peserta didik mampu menerapkan fungsi pengambilan keputusan logika (<code>IF</code>), fungsi pencarian data vertikal dan horizontal (<code>VLOOKUP</code> &amp; <code>HLOOKUP</code>), serta menyusun laporan ringkasan otomatis menggunakan <strong>Pivot Table</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h2>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Ilustrasi Visual: Cara Kerja VLOOKUP vs HLOOKUP
+      </h2>
+      <p>Perhatikan perbedaan arah pencarian data antara <strong>VLOOKUP</strong> (menurun per kolom) dan <strong>HLOOKUP</strong> (mendatar per baris) pada diagram di bawah ini:</p>
+
+      <div class="diagram-container">
+        <svg width="780" height="240" viewBox="0 0 780 240">
+          <!-- VLOOKUP BOX -->
+          <rect x="10" y="10" width="365" height="220" rx="10" fill="#f0fdf4" stroke="#107c41" stroke-width="2"/>
+          <text x="192" y="36" text-anchor="middle" font-weight="bold" font-size="15" fill="#0b5a2f">1. VLOOKUP (Vertical Lookup)</text>
+          <text x="192" y="54" text-anchor="middle" font-size="12" fill="#374151">Mencari kunci di Kolom Pertama, lalu geser ke KANAN</text>
+
+          <!-- VLOOKUP Table -->
+          <rect x="35" y="70" width="95" height="30" fill="#107c41"/>
+          <text x="82" y="90" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Kolom 1 (Kunci)</text>
+          <rect x="130" y="70" width="110" height="30" fill="#1a73e8"/>
+          <text x="185" y="90" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Kolom 2</text>
+          <rect x="240" y="70" width="110" height="30" fill="#1a73e8"/>
+          <text x="295" y="90" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Kolom 3</text>
+
+          <rect x="35" y="100" width="95" height="30" fill="white" stroke="#9ca3af"/>
+          <text x="82" y="120" text-anchor="middle" font-size="12">M-01</text>
+          <rect x="130" y="100" width="110" height="30" fill="white" stroke="#9ca3af"/>
+          <text x="185" y="120" text-anchor="middle" font-size="12">Jus Alpukat</text>
+          <rect x="240" y="100" width="110" height="30" fill="white" stroke="#9ca3af"/>
+          <text x="295" y="120" text-anchor="middle" font-size="12">8.000</text>
+
+          <rect x="35" y="130" width="95" height="30" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+          <text x="82" y="150" text-anchor="middle" font-size="12" font-weight="bold">M-02 (Cari)</text>
+          <rect x="130" y="130" width="110" height="30" fill="#dbeafe" stroke="#2563eb"/>
+          <text x="185" y="150" text-anchor="middle" font-size="12">Susu Kedelai</text>
+          <rect x="240" y="130" width="110" height="30" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+          <text x="295" y="150" text-anchor="middle" font-size="12" font-weight="bold">5.000 (Hasil)</text>
+
+          <!-- Arrows VLOOKUP -->
+          <path d="M 50 105 L 50 145" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow)"/>
+          <path d="M 115 145 L 250 145" stroke="#2563eb" stroke-width="3" stroke-dasharray="4,2"/>
+          <text x="192" y="195" text-anchor="middle" font-size="12" font-weight="bold" fill="#0b5a2f">Turun ke M-02 → Ambil Kolom ke-3</text>
+
+          <!-- HLOOKUP BOX -->
+          <rect x="405" y="10" width="365" height="220" rx="10" fill="#eff6ff" stroke="#1a73e8" stroke-width="2"/>
+          <text x="587" y="36" text-anchor="middle" font-weight="bold" font-size="15" fill="#1e40af">2. HLOOKUP (Horizontal Lookup)</text>
+          <text x="587" y="54" text-anchor="middle" font-size="12" fill="#374151">Mencari kunci di Baris Pertama, lalu turun ke BAWAH</text>
+
+          <!-- HLOOKUP Table -->
+          <rect x="425" y="80" width="85" height="35" fill="#1a73e8"/>
+          <text x="467" y="102" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Baris 1 (Kunci)</text>
+          <rect x="510" y="80" width="80" height="35" fill="white" stroke="#9ca3af"/>
+          <text x="550" y="102" text-anchor="middle" font-size="12">Reguler</text>
+          <rect x="590" y="80" width="80" height="35" fill="white" stroke="#9ca3af"/>
+          <text x="630" y="102" text-anchor="middle" font-size="12">Silver</text>
+          <rect x="670" y="80" width="80" height="35" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+          <text x="710" y="102" text-anchor="middle" font-size="12" font-weight="bold">Gold (Cari)</text>
+
+          <rect x="425" y="115" width="85" height="35" fill="#107c41"/>
+          <text x="467" y="137" text-anchor="middle" fill="white" font-size="11" font-weight="bold">Baris 2 (Hasil)</text>
+          <rect x="510" y="115" width="80" height="35" fill="white" stroke="#9ca3af"/>
+          <text x="550" y="137" text-anchor="middle" font-size="12">0%</text>
+          <rect x="590" y="115" width="80" height="35" fill="white" stroke="#9ca3af"/>
+          <text x="630" y="137" text-anchor="middle" font-size="12">5%</text>
+          <rect x="670" y="115" width="80" height="35" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+          <text x="710" y="137" text-anchor="middle" font-size="12" font-weight="bold">10% (Hasil)</text>
+
+          <path d="M 540 72 L 705 72" stroke="#dc2626" stroke-width="3"/>
+          <path d="M 710 105 L 710 125" stroke="#2563eb" stroke-width="3"/>
+          <text x="587" y="195" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e40af">Geser ke Gold → Turun ke Baris ke-2</text>
+        </svg>
+        <div class="caption">Gambar 1. Perbandingan arah pencarian tabel pada fungsi VLOOKUP dan HLOOKUP.</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="concept-box">
+          <h4>Fungsi Logika IF</h4>
+          <p style="font-size:0.9rem; margin:0;">Menguji syarat tertentu untuk menentukan dua kemungkinan hasil (Benar atau Salah).</p>
+          <div class="formula-pill">=IF(E2>=50; "Laris"; "Normal")</div>
+        </div>
+        <div class="concept-box">
+          <h4>Pivot Table</h4>
+          <p style="font-size:0.9rem; margin:0;">Alat peringkas data interaktif untuk mengelompokkan dan menjumlahkan data otomatis tanpa mengetik rumus.</p>
+          <div class="formula-pill">Insert → PivotTable → Atur Rows &amp; Values</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 2: SIMULASI IF & STATISTIK -->
+  <section id="tab2" class="tab-panel">
+    <div class="card">
+      <h2>Kegiatan 1: Simulasi Pengolahan Data Kantin &amp; Fungsi IF</h2>
+      <p>Perhatikan dataset penjualan minuman sehat di <strong>Kantin SMP Nusantara</strong> berikut. Kamu dapat mengubah jumlah <strong>Terjual</strong> pada simulasi di bawah untuk melihat bagaimana <strong>Total Pendapatan</strong> dan <strong>Status Penjualan (Fungsi IF)</strong> berubah otomatis!</p>
+
+      <div class="sim-panel">
+        <strong>Simulasi Interaktif: Ubah Jumlah Terjual Produk</strong>
+        <div class="sim-controls" style="margin-top:8px;">
+          <div>
+            <label style="font-size:0.85rem;">Pilih Produk:</label>
+            <select id="simProdSelect" onchange="syncSimQty()">
+              <option value="0">M-01 - Jus Alpukat (Rp 8.000)</option>
+              <option value="1">M-02 - Susu Kedelai (Rp 5.000)</option>
+              <option value="2">M-03 - Jus Mangga (Rp 7.000)</option>
+              <option value="3">M-04 - Air Mineral (Rp 3.000)</option>
+              <option value="4">M-05 - Sari Kacang Hijau (Rp 5.000)</option>
+              <option value="5">M-06 - Jus Jambu (Rp 6.000)</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.85rem;">Jumlah Terjual (Gelas):</label>
+            <input type="text" id="simQtyInput" value="45" oninput="updateKantinSim()">
+          </div>
+          <div>
+            <button class="btn btn-outline" onclick="resetKantinData()">Reset Data Awal</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sheet-wrapper">
+        <table class="excel-table" id="kantinTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="col-header">A (Kode)</th>
+              <th class="col-header">B (Nama Produk)</th>
+              <th class="col-header">C (Kategori)</th>
+              <th class="col-header">D (Harga)</th>
+              <th class="col-header">E (Terjual)</th>
+              <th class="col-header">F (Total Pendapatan)</th>
+              <th class="col-header">G (Status: IF E>=50)</th>
+            </tr>
+          </thead>
+          <tbody id="kantinBody"></tbody>
+        </table>
+      </div>
+
+      <h3>Latihan Penulisan Rumus (Skor Maksimal: 30 Poin)</h3>
+      <p><em>Petunjuk: Gunakan tanda titik koma (<code>;</code>) atau koma (<code>,</code>) sebagai pemisah argumen rumus.</em></p>
+
+      <div class="form-group">
+        <label>1. Tuliskan rumus pada sel <code>F2</code> untuk menghitung Total Pendapatan Jus Alpukat (Harga × Terjual):</label>
+        <div class="formula-bar">
+          <span class="fx">fx</span>
+          <input type="text" id="q1_f2" placeholder="Ketik rumus diawali tanda = (contoh: =D2*E2)">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>2. Tuliskan rumus logika <code>IF</code> pada sel <code>G2</code>: Jika Terjual (<code>E2</code>) <code>>=50</code> maka <code>"Laris"</code>, selain itu <code>"Normal"</code>:</label>
+        <div class="formula-bar">
+          <span class="fx">fx</span>
+          <input type="text" id="q1_g2" placeholder='Contoh: =IF(E2>=50;"Laris";"Normal")'>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>3. Tuliskan rumus untuk menghitung Total Seluruh Pendapatan Kantin dari sel <code>F2</code> sampai <code>F7</code>:</label>
+        <div class="formula-bar">
+          <span class="fx">fx</span>
+          <input type="text" id="q1_sum" placeholder="Contoh: =SUM(F2:F7)">
+        </div>
+      </div>
+
+      <button class="btn" onclick="checkTab2()">Periksa Jawaban Kegiatan 1</button>
+      <div id="fb_tab2" class="feedback"></div>
+    </div>
+  </section>
+
+  <!-- TAB 3: SIMULASI VLOOKUP & HLOOKUP -->
+  <section id="tab3" class="tab-panel">
+    <div class="card">
+      <h2>Kegiatan 2: Simulasi Kasir Otomatis (VLOOKUP &amp; HLOOKUP)</h2>
+      <p>Uji coba bagaimana mesin kasir mengambil <strong>Nama Produk &amp; Harga</strong> secara vertikal (<code>VLOOKUP</code>) serta mengambil <strong>Diskon Member</strong> secara horizontal (<code>HLOOKUP</code>).</p>
+
+      <div class="sim-panel">
+        <strong>Simulasi Mesin Kasir Pintar:</strong>
+        <div class="sim-controls" style="margin-top:8px;">
+          <div>
+            <label style="font-size:0.85rem;">Input Kode Produk (Sel A11):</label>
+            <select id="simLookupCode" onchange="runLookupSim()">
+              <option value="M-01">M-01</option>
+              <option value="M-02">M-02</option>
+              <option value="M-03" selected>M-03</option>
+              <option value="M-04">M-04</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:0.85rem;">Input Tingkat Member (Sel D11):</label>
+            <select id="simLookupMember" onchange="runLookupSim()">
+              <option value="Reguler">Reguler</option>
+              <option value="Silver">Silver</option>
+              <option value="Gold" selected>Gold</option>
+            </select>
+          </div>
+        </div>
+        <div id="lookupLiveExplanation" style="margin-top:12px; font-size:0.9rem; background:white; padding:10px; border-radius:8px; border:1px solid #d1d5db;"></div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Tabel Referensi 1: Vertikal (<code>$A$2:$C$5</code>)</h3>
+          <div class="sheet-wrapper">
+            <table class="excel-table" id="vlookupRefTable">
+              <thead>
+                <tr><th></th><th>A (Kode)</th><th>B (Produk)</th><th>C (Harga)</th></tr>
+              </thead>
+              <tbody>
+                <tr data-code="M-01"><td class="row-num">2</td><td class="center">M-01</td><td>Jus Alpukat</td><td class="num">8.000</td></tr>
+                <tr data-code="M-02"><td class="row-num">3</td><td class="center">M-02</td><td>Susu Kedelai</td><td class="num">5.000</td></tr>
+                <tr data-code="M-03"><td class="row-num">4</td><td class="center">M-03</td><td>Jus Mangga</td><td class="num">7.000</td></tr>
+                <tr data-code="M-04"><td class="row-num">5</td><td class="center">M-04</td><td>Air Mineral</td><td class="num">3.000</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h3>Tabel Referensi 2: Horizontal (<code>$B$7:$D$8</code>)</h3>
+          <div class="sheet-wrapper">
+            <table class="excel-table" id="hlookupRefTable">
+              <thead>
+                <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="row-num">7</td>
+                  <td><strong>Member</strong></td>
+                  <td class="center" data-mem="Reguler">Reguler</td>
+                  <td class="center" data-mem="Silver">Silver</td>
+                  <td class="center" data-mem="Gold">Gold</td>
+                </tr>
+                <tr>
+                  <td class="row-num">8</td>
+                  <td><strong>Diskon</strong></td>
+                  <td class="center" data-mem="Reguler">0%</td>
+                  <td class="center" data-mem="Silver">5%</td>
+                  <td class="center" data-mem="Gold">10%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3>Tabel Kasir Transaksi (Baris 11)</h3>
+      <div class="sheet-wrapper">
+        <table class="excel-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>A (Kode)</th>
+              <th>B (Nama Produk)</th>
+              <th>C (Harga)</th>
+              <th>D (Member)</th>
+              <th>E (Diskon)</th>
+              <th>F (Harga Akhir)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-num">11</td>
+              <td class="center highlight-cell" id="kasir_a11">M-03</td>
+              <td id="kasir_b11">Jus Mangga</td>
+              <td class="num" id="kasir_c11">7.000</td>
+              <td class="center highlight-cell" id="kasir_d11">Gold</td>
+              <td class="center" id="kasir_e11">10%</td>
+              <td class="num" style="font-weight:bold; color:var(--primary);" id="kasir_f11">6.300</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Latihan Penulisan Rumus Lookup (Skor Maksimal: 40 Poin)</h3>
+      <div class="form-group">
+        <label>1. Rumus <code>VLOOKUP</code> pada sel <code>B11</code> untuk mengambil <strong>Nama Produk</strong> (kolom ke-2) dari tabel <code>$A$2:$C$5</code> berdasarkan kode <code>A11</code>:</label>
+        <div class="formula-bar">
+          <span class="fx">fx</span>
+          <input type="text" id="q2_vlookup" placeholder="Contoh: =VLOOKUP(A11;$A$2:$C$5;2;FALSE)">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>2. Rumus <code>HLOOKUP</code> pada sel <code>E11</code> untuk mengambil <strong>Persentase Diskon</strong> (baris ke-2) dari tabel <code>$B$7:$D$8</code> berdasarkan member <code>D11</code>:</label>
+        <div class="formula-bar">
+          <span class="fx">fx</span>
+          <input type="text" id="q2_hlookup" placeholder="Contoh: =HLOOKUP(D11;$B$7:$D$8;2;FALSE)">
+        </div>
+      </div>
+
+      <button class="btn" onclick="checkTab3()">Periksa Jawaban Kegiatan 2</button>
+      <div id="fb_tab3" class="feedback"></div>
+    </div>
+  </section>
+
+  <!-- TAB 4: SIMULASI PIVOT TABLE & GRAFIK -->
+  <section id="tab4" class="tab-panel">
+    <div class="card">
+      <h2>Kegiatan 3: Simulasi Pivot Table &amp; Visualisasi Grafik</h2>
+      <p>Bangun laporan ringkasan otomatis dari data penjualan kantin dengan memilih pengaturan <strong>Rows (Baris)</strong> dan <strong>Values (Nilai Hitung)</strong> di bawah ini:</p>
+
+      <div class="sim-panel">
+        <strong>Panel Bidang Pivot Table (PivotTable Fields)</strong>
+        <div class="pivot-zones">
+          <div class="zone-box">
+            <h4>1. Pilih Pengelompokan (Rows):</h4>
+            <div class="chip-group">
+              <button class="chip active" id="row_kategori" onclick="setPivotRow('kategori')">Kategori Minuman</button>
+              <button class="chip" id="row_status" onclick="setPivotRow('status')">Status (Laris/Normal)</button>
+            </div>
+          </div>
+          <div class="zone-box">
+            <h4>2. Pilih Nilai yang Dijumlahkan (Values):</h4>
+            <div class="chip-group">
+              <button class="chip active" id="val_terjual" onclick="setPivotVal('terjual')">Sum of Terjual (Gelas)</button>
+              <button class="chip" id="val_pendapatan" onclick="setPivotVal('pendapatan')">Sum of Pendapatan (Rp)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Hasil Tabel Pivot Otomatis</h3>
+          <div class="sheet-wrapper">
+            <table class="excel-table" id="pivotResultTable">
+              <thead>
+                <tr>
+                  <th id="pivotColTitle">Row Labels (Kategori)</th>
+                  <th id="pivotValTitle">Sum of Terjual</th>
+                </tr>
+              </thead>
+              <tbody id="pivotBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <h3>PivotChart (Diagram Batang Otomatis)</h3>
+          <div class="diagram-container" id="pivotChartBox" style="margin:0;"></div>
+        </div>
+      </div>
+
+      <h3>Pertanyaan Analisis Pivot Table (Skor Maksimal: 30 Poin)</h3>
+      <div class="form-group">
+        <label>1. Berdasarkan hasil Pivot Table, kategori minuman manakah yang memiliki <strong>jumlah gelas terjual terbanyak</strong>?</label>
+        <select id="q3_terbanyak">
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="Jus Buah">Jus Buah (135 gelas)</option>
+          <option value="Air Putih">Air Putih (120 gelas)</option>
+          <option value="Susu Nabati">Susu Nabati (95 gelas)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>2. Kategori minuman manakah yang menyumbang <strong>total pendapatan (rupiah) paling besar</strong> bagi kantin?</label>
+        <select id="q3_pendapatan">
+          <option value="">-- Pilih Jawaban --</option>
+          <option value="Jus Buah">Jus Buah (Rp 950.000)</option>
+          <option value="Susu Nabati">Susu Nabati (Rp 475.000)</option>
+          <option value="Air Putih">Air Putih (Rp 360.000)</option>
+        </select>
+      </div>
+
+      <button class="btn" onclick="checkTab4()">Periksa Jawaban Kegiatan 3</button>
+      <div id="fb_tab4" class="feedback"></div>
+    </div>
+  </section>
+
+  <!-- TAB 5: KESIMPULAN & REKAP NILAI -->
+  <section id="tab5" class="tab-panel">
+    <div class="card">
+      <h2>Kesimpulan &amp; Rekap Hasil Belajar</h2>
+      <div class="form-group">
+        <label>Tuliskan kesimpulan kelompokmu mengenai perbedaan kegunaan antara fungsi <code>VLOOKUP</code>, <code>HLOOKUP</code>, dan fitur <code>Pivot Table</code>:</label>
+        <textarea id="studentConclusion" rows="4" placeholder="Tuliskan kesimpulan kalian di sini..."></textarea>
+      </div>
+
+      <div class="concept-box" style="background:var(--primary-light); border-color:var(--primary);">
+        <h3 style="margin-top:0; color:var(--primary-dark);">Rincian Skor Otomatis</h3>
+        <ul style="margin:8px 0; padding-left:20px;">
+          <li><strong>Kegiatan 1 (Rumus Dasar &amp; Logika IF):</strong> <span id="recap1">0</span> / 30 poin</li>
+          <li><strong>Kegiatan 2 (VLOOKUP &amp; HLOOKUP):</strong> <span id="recap2">0</span> / 40 poin</li>
+          <li><strong>Kegiatan 3 (Analisis Pivot Table):</strong> <span id="recap3">0</span> / 30 poin</li>
+        </ul>
+        <p style="font-size:1.1rem; font-weight:bold; margin-bottom:0;">Total Nilai Akhir: <span id="recapTotal">0</span> / 100</p>
+      </div>
+
+      <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+        <button class="btn" onclick="window.print()">Cetak / Simpan PDF Laporan</button>
+        <button class="btn btn-secondary" onclick="showAnswerKey()">Tampilkan Kunci Jawaban (Mode Guru)</button>
+      </div>
+
+      <div id="answerKeyBox" class="card" style="display:none; margin-top:20px; background:#fffbeb; border-color:#f59e0b;">
+        <h3 style="margin-top:0; color:#b45309;">Kunci Jawaban Referensi Guru</h3>
+        <ul>
+          <li><strong>Sel F2 (Total Pendapatan):</strong> <code>=D2*E2</code></li>
+          <li><strong>Sel G2 (Fungsi IF):</strong> <code>=IF(E2>=50;"Laris";"Normal")</code></li>
+          <li><strong>Total Seluruh Pendapatan:</strong> <code>=SUM(F2:F7)</code> (Hasil: Rp 1.785.000)</li>
+          <li><strong>Sel B11 (VLOOKUP):</strong> <code>=VLOOKUP(A11;$A$2:$C$5;2;FALSE)</code></li>
+          <li><strong>Sel E11 (HLOOKUP):</strong> <code>=HLOOKUP(D11;$B$7:$D$8;2;FALSE)</code></li>
+          <li><strong>Pivot Table Terjual Terbanyak:</strong> Jus Buah (135 gelas)</li>
+          <li><strong>Pivot Table Pendapatan Terbesar:</strong> Jus Buah (Rp 950.000)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // State Skor
+  let scores = { tab2: 0, tab3: 0, tab4: 0 };
+
+  function updateTotalScore() {
+    const total = scores.tab2 + scores.tab3 + scores.tab4;
+    document.getElementById('totalScore').textContent = total + ' / 100';
+    document.getElementById('recap1').textContent = scores.tab2;
+    document.getElementById('recap2').textContent = scores.tab3;
+    document.getElementById('recap3').textContent = scores.tab4;
+    document.getElementById('recapTotal').textContent = total;
+  }
+
+  // Tab Navigation
+  function openTab(tabId, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Data Kantin Awal
+  const defaultKantinData = [
+    { kode: 'M-01', nama: 'Jus Alpukat', kategori: 'Jus Buah', harga: 8000, terjual: 45 },
+    { kode: 'M-02', nama: 'Susu Kedelai', kategori: 'Susu Nabati', harga: 5000, terjual: 60 },
+    { kode: 'M-03', nama: 'Jus Mangga', kategori: 'Jus Buah', harga: 7000, terjual: 50 },
+    { kode: 'M-04', nama: 'Air Mineral', kategori: 'Air Putih', harga: 3000, terjual: 120 },
+    { kode: 'M-05', nama: 'Sari Kacang Hijau', kategori: 'Susu Nabati', harga: 5000, terjual: 35 },
+    { kode: 'M-06', nama: 'Jus Jambu', kategori: 'Jus Buah', harga: 6000, terjual: 40 }
+  ];
+
+  let kantinData = JSON.parse(JSON.stringify(defaultKantinData));
+
+  function formatRupiah(num) {
+    return 'Rp ' + num.toLocaleString('id-ID');
+  }
+
+  function renderKantinTable() {
+    const tbody = document.getElementById('kantinBody');
+    tbody.innerHTML = '';
+    let totalTerjual = 0;
+    let totalPendapatan = 0;
+
+    kantinData.forEach((item, idx) => {
+      const subtotal = item.harga * item.terjual;
+      const isLaris = item.terjual >= 50;
+      totalTerjual += item.terjual;
+      totalPendapatan += subtotal;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="row-num">${idx + 2}</td>
+        <td class="center">${item.kode}</td>
+        <td>${item.nama}</td>
+        <td>${item.kategori}</td>
+        <td class="num">${item.harga.toLocaleString('id-ID')}</td>
+        <td class="num"><strong>${item.terjual}</strong></td>
+        <td class="num">${subtotal.toLocaleString('id-ID')}</td>
+        <td class="center"><span class="status-badge ${isLaris ? 'status-laris' : 'status-normal'}">${isLaris ? 'Laris' : 'Normal'}</span></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    const trSum = document.createElement('tr');
+    trSum.style.background = '#f3f4f6';
+    trSum.style.fontWeight = 'bold';
+    trSum.innerHTML = `
+      <td class="row-num">8</td>
+      <td colspan="4" class="num">TOTAL KESELURUHAN:</td>
+      <td class="num">${totalTerjual}</td>
+      <td class="num" style="color:var(--primary);">${totalPendapatan.toLocaleString('id-ID')}</td>
+      <td></td>
+    `;
+    tbody.appendChild(trSum);
+  }
+
+  function syncSimQty() {
+    const idx = parseInt(document.getElementById('simProdSelect').value);
+    document.getElementById('simQtyInput').value = kantinData[idx].terjual;
+  }
+
+  function updateKantinSim() {
+    const idx = parseInt(document.getElementById('simProdSelect').value);
+    const val = parseInt(document.getElementById('simQtyInput').value);
+    if (!isNaN(val) && val >= 0) {
+      kantinData[idx].terjual = val;
+      renderKantinTable();
+      renderPivot();
+    }
+  }
+
+  function resetKantinData() {
+    kantinData = JSON.parse(JSON.stringify(defaultKantinData));
+    syncSimQty();
+    renderKantinTable();
+    renderPivot();
+  }
+
+  function normalizeFormula(str) {
+    return str.trim().toUpperCase().replace(/\s+/g, '').replace(/,/g, ';');
+  }
+
+  function checkTab2() {
+    const f2 = normalizeFormula(document.getElementById('q1_f2').value);
+    const g2 = normalizeFormula(document.getElementById('q1_g2').value);
+    const sum = normalizeFormula(document.getElementById('q1_sum').value);
+
+    let pts = 0;
+    let msgs = [];
+
+    if (f2 === '=D2*E2' || f2 === '=E2*D2' || f2 === '=PRODUCT(D2;E2)') {
+      pts += 10;
+    } else {
+      msgs.push('Nomor 1 belum tepat (gunakan perkalian sel harga D2 dan terjual E2).');
+    }
+
+    if (g2 === '=IF(E2>=50;"LARIS";"NORMAL")' || g2 === '=IF(E2>49;"LARIS";"NORMAL")') {
+      pts += 10;
+    } else {
+      msgs.push('Nomor 2 belum tepat (periksa syarat E2>=50 dan tanda kutip teks "Laris";"Normal").');
+    }
+
+    if (sum === '=SUM(F2:F7)') {
+      pts += 10;
+    } else {
+      msgs.push('Nomor 3 belum tepat (gunakan fungsi =SUM(F2:F7)).');
+    }
+
+    scores.tab2 = pts;
+    updateTotalScore();
+
+    const fb = document.getElementById('fb_tab2');
+    if (pts === 30) {
+      fb.className = 'feedback ok';
+      fb.innerHTML = '<strong>Hebat! (30/30 Poin)</strong> Semua rumus dasar dan logika IF sudah benar.';
+    } else {
+      fb.className = 'feedback err';
+      fb.innerHTML = `<strong>Skor Kegiatan 1: ${pts}/30 Poin.</strong><br>${msgs.join('<br>')}`;
+    }
+  }
+
+  // Simulasi VLOOKUP & HLOOKUP
+  const vData = {
+    'M-01': { nama: 'Jus Alpukat', harga: 8000 },
+    'M-02': { nama: 'Susu Kedelai', harga: 5000 },
+    'M-03': { nama: 'Jus Mangga', harga: 7000 },
+    'M-04': { nama: 'Air Mineral', harga: 3000 }
+  };
+
+  const hData = {
+    'Reguler': 0,
+    'Silver': 0.05,
+    'Gold': 0.10
+  };
+
+  function runLookupSim() {
+    const code = document.getElementById('simLookupCode').value;
+    const mem = document.getElementById('simLookupMember').value;
+
+    const prod = vData[code];
+    const disc = hData[mem];
+    const finalPrice = prod.harga - (prod.harga * disc);
+
+    document.getElementById('kasir_a11').textContent = code;
+    document.getElementById('kasir_b11').textContent = prod.nama;
+    document.getElementById('kasir_c11').textContent = prod.harga.toLocaleString('id-ID');
+    document.getElementById('kasir_d11').textContent = mem;
+    document.getElementById('kasir_e11').textContent = (disc * 100) + '%';
+    document.getElementById('kasir_f11').textContent = finalPrice.toLocaleString('id-ID');
+
+    // Highlight tabel referensi
+    document.querySelectorAll('#vlookupRefTable tbody tr').forEach(tr => {
+      tr.classList.toggle('highlight-row', tr.dataset.code === code);
+    });
+
+    document.querySelectorAll('#hlookupRefTable td[data-mem]').forEach(td => {
+      td.classList.toggle('highlight-col', td.dataset.mem === mem);
+    });
+
+    document.getElementById('lookupLiveExplanation').innerHTML = `
+      <strong>Proses Otomatis:</strong><br>
+      • <code>VLOOKUP</code> mencari kode <strong>${code}</strong> ke bawah → ditemukan <strong>${prod.nama}</strong> seharga <strong>Rp ${prod.harga.toLocaleString('id-ID')}</strong>.<br>
+      • <code>HLOOKUP</code> mencari member <strong>${mem}</strong> ke samping → ditemukan diskon <strong>${disc * 100}%</strong>.<br>
+      • Harga akhir yang dibayar pembeli: <strong>Rp ${finalPrice.toLocaleString('id-ID')}</strong>.
+    `;
+  }
+
+  function checkTab3() {
+    const vl = normalizeFormula(document.getElementById('q2_vlookup').value);
+    const hl = normalizeFormula(document.getElementById('q2_hlookup').value);
+
+    let pts = 0;
+    let msgs = [];
+
+    const validVL = [
+      '=VLOOKUP(A11;$A$2:$C$5;2;FALSE)',
+      '=VLOOKUP(A11;$A$2:$C$5;2;0)',
+      '=VLOOKUP(A11;A2:C5;2;FALSE)',
+      '=VLOOKUP(A11;A2:C5;2;0)'
+    ];
+    if (validVL.includes(vl)) {
+      pts += 20;
+    } else {
+      msgs.push('Rumus VLOOKUP belum tepat. Pastikan format: =VLOOKUP(A11;$A$2:$C$5;2;FALSE)');
+    }
+
+    const validHL = [
+      '=HLOOKUP(D11;$B$7:$D$8;2;FALSE)',
+      '=HLOOKUP(D11;$B$7:$D$8;2;0)',
+      '=HLOOKUP(D11;B7:D8;2;FALSE)',
+      '=HLOOKUP(D11;B7:D8;2;0)'
+    ];
+    if (validHL.includes(hl)) {
+      pts += 20;
+    } else {
+      msgs.push('Rumus HLOOKUP belum tepat. Pastikan format: =HLOOKUP(D11;$B$7:$D$8;2;FALSE)');
+    }
+
+    scores.tab3 = pts;
+    updateTotalScore();
+
+    const fb = document.getElementById('fb_tab3');
+    if (pts === 40) {
+      fb.className = 'feedback ok';
+      fb.innerHTML = '<strong>Luar Biasa! (40/40 Poin)</strong> Rumus VLOOKUP dan HLOOKUP sudah akurat.';
+    } else {
+      fb.className = 'feedback err';
+      fb.innerHTML = `<strong>Skor Kegiatan 2: ${pts}/40 Poin.</strong><br>${msgs.join('<br>')}`;
+    }
+  }
+
+  // Simulasi Pivot Table & SVG Bar Chart
+  let pivotRowMode = 'kategori';
+  let pivotValMode = 'terjual';
+
+  function setPivotRow(mode) {
+    pivotRowMode = mode;
+    document.getElementById('row_kategori').classList.toggle('active', mode === 'kategori');
+    document.getElementById('row_status').classList.toggle('active', mode === 'status');
+    renderPivot();
+  }
+
+  function setPivotVal(mode) {
+    pivotValMode = mode;
+    document.getElementById('val_terjual').classList.toggle('active', mode === 'terjual');
+    document.getElementById('val_pendapatan').classList.toggle('active', mode === 'pendapatan');
+    renderPivot();
+  }
+
+  function renderPivot() {
+    const groups = {};
+    kantinData.forEach(item => {
+      const key = pivotRowMode === 'kategori' ? item.kategori : (item.terjual >= 50 ? 'Laris' : 'Normal');
+      const val = pivotValMode === 'terjual' ? item.terjual : (item.harga * item.terjual);
+      groups[key] = (groups[key] || 0) + val;
+    });
+
+    document.getElementById('pivotColTitle').textContent = pivotRowMode === 'kategori' ? 'Row Labels (Kategori)' : 'Row Labels (Status)';
+    document.getElementById('pivotValTitle').textContent = pivotValMode === 'terjual' ? 'Sum of Terjual (Gelas)' : 'Sum of Pendapatan (Rp)';
+
+    const tbody = document.getElementById('pivotBody');
+    tbody.innerHTML = '';
+    let grandTotal = 0;
+    const entries = Object.entries(groups);
+
+    entries.forEach(([k, v]) => {
+      grandTotal += v;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${k}</td><td class="num">${v.toLocaleString('id-ID')}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    const trTotal = document.createElement('tr');
+    trTotal.style.background = '#e6f4ea';
+    trTotal.style.fontWeight = 'bold';
+    trTotal.innerHTML = `<td>Grand Total</td><td class="num">${grandTotal.toLocaleString('id-ID')}</td>`;
+    tbody.appendChild(trTotal);
+
+    // Render SVG Chart
+    const maxVal = Math.max(...entries.map(e => e[1]), 1);
+    const colors = ['#107c41', '#1a73e8', '#f59e0b', '#8b5cf6'];
+    let barsSvg = '';
+    const barWidth = 65;
+    const gap = 35;
+
+    entries.forEach(([label, val], i) => {
+      const barHeight = Math.round((val / maxVal) * 120);
+      const x = 45 + i * (barWidth + gap);
+      const y = 150 - barHeight;
+      const displayVal = pivotValMode === 'terjual' ? val : (val / 1000) + 'k';
+
+      barsSvg += `
+        <rect x="${x}" y="${y}" width="${barWidth}" height="${barHeight}" rx="4" fill="${colors[i % colors.length]}"/>
+        <text x="${x + barWidth/2}" y="${y - 6}" text-anchor="middle" font-size="11" font-weight="bold" fill="#1f2937">${displayVal}</text>
+        <text x="${x + barWidth/2}" y="168" text-anchor="middle" font-size="11" fill="#374151">${label}</text>
+      `;
+    });
+
+    document.getElementById('pivotChartBox').innerHTML = `
+      <svg width="360" height="185" viewBox="0 0 360 185">
+        <line x1="30" y1="150" x2="340" y2="150" stroke="#9ca3af" stroke-width="2"/>
+        ${barsSvg}
+      </svg>
+      <div class="caption">Grafik Batang Otomatis berdasarkan pengaturan Pivot Table</div>
+    `;
+  }
+
+  function checkTab4() {
+    const q1 = document.getElementById('q3_terbanyak').value;
+    const q2 = document.getElementById('q3_pendapatan').value;
+    let pts = 0;
+    let msgs = [];
+
+    if (q1 === 'Jus Buah') {
+      pts += 15;
+    } else {
+      msgs.push('Pertanyaan 1 belum tepat (jumlahkan total gelas kategori Jus Buah: 45+50+40 = 135 gelas).');
+    }
+
+    if (q2 === 'Jus Buah') {
+      pts += 15;
+    } else {
+      msgs.push('Pertanyaan 2 belum tepat (kategori Jus Buah menghasilkan Rp 950.000).');
+    }
+
+    scores.tab4 = pts;
+    updateTotalScore();
+
+    const fb = document.getElementById('fb_tab4');
+    if (pts === 30) {
+      fb.className = 'feedback ok';
+      fb.innerHTML = '<strong>Sempurna! (30/30 Poin)</strong> Analisis Pivot Table kalian sudah tepat.';
+    } else {
+      fb.className = 'feedback err';
+      fb.innerHTML = `<strong>Skor Kegiatan 3: ${pts}/30 Poin.</strong><br>${msgs.join('<br>')}`;
+    }
+  }
+
+  function showAnswerKey() {
+    const box = document.getElementById('answerKeyBox');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+
+  // Init
+  renderKantinTable();
+  runLookupSim();
+  renderPivot();
+</script>
+
+</body>
+</html>
